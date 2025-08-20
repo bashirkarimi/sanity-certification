@@ -23,4 +23,16 @@ export const artistType = defineType({
       type: "image",
     }),
   ],
+  preview: {
+    select: {
+      title: "name",
+      media: "photo",
+    },
+    prepare({title, media}) {
+      return {
+        title,
+        media: media || UsersIcon,
+      }
+    },
+  },
 });
