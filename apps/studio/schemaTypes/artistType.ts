@@ -16,11 +16,13 @@ export const artistType = defineType({
       name: "description",
       title: "Description",
       type: "text",
+      validation: (Rule) => Rule.required().min(10).max(200).info("A brief description of the artist"),
     }),
     defineField({
       name: "photo",
       title: "Photo",
       type: "image",
+      validation: (Rule) => Rule.required().warning("Good to have a photo"),
     }),
   ],
   preview: {
