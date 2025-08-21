@@ -1,6 +1,6 @@
 import {defineType, defineField} from 'sanity'
 import {CalendarIcon} from '@sanity/icons'
-import { DoorsOpenInput } from "./components/doors-open-input"
+import {DoorsOpenInput} from './components/doors-open-input'
 
 export const eventType = defineType({
   name: 'event',
@@ -23,6 +23,13 @@ export const eventType = defineType({
       type: 'slug',
       options: {source: 'name'},
       hidden: ({document}) => !document?.name,
+      validation: (rule) => rule.required().error('Slug is required'),
+      readOnly: ({value, currentUser}) => {
+        if (!value) return false
+        if (!currentUser || !Array.isArray(currentUser.roles)) return false
+        const isAdmin = currentUser.roles.some((role) => role.name === 'administrator')
+        return !isAdmin
+      },
     }),
     defineField({
       name: 'eventType',
