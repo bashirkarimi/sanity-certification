@@ -4,6 +4,7 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 import {defaultDocumentNode} from './structure/default-document-node'
+import {media} from 'sanity-plugin-media'
 
 export default defineConfig({
   name: 'default',
@@ -14,7 +15,8 @@ export default defineConfig({
 
   plugins: [
     structureTool({structure, defaultDocumentNode}), 
-    visionTool()
+    visionTool(),
+    media()
   ],
 
   schema: {
