@@ -12,14 +12,7 @@ const DoorsOpenInput = (props: NumberInputProps) => {
     <Stack space={3}>
       {props.renderDefault(props)}
       <Text size={1}>
-        Doors Open {subtractMinutesFromDate(date, props.value || 0).toLocaleString(undefined, {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-        {date
-          ? `Doors Open ${subtractMinutesFromDate(date, props.value || 0).toLocaleString(undefined, {
+        {date ? `Doors Open ${subtractMinutesFromDate(date, props.value || 0).toLocaleString(undefined, {
               month: 'long',
               day: 'numeric',
               year: 'numeric',
