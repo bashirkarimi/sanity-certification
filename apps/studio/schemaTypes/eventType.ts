@@ -27,7 +27,7 @@ export const eventType = defineType({
       readOnly: ({value, currentUser}) => {
         if (!value) return false
         if (!currentUser || !Array.isArray(currentUser.roles)) return false
-        const isAdmin = currentUser.roles.some((role) => role.name === 'administrator')
+        const isAdmin = currentUser.roles.some((role) => role && typeof role.name === 'string' && role.name === 'administrator')
         return !isAdmin
       },
     }),
