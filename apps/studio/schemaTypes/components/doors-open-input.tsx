@@ -18,7 +18,15 @@ const DoorsOpenInput = (props: NumberInputProps) => {
           year: 'numeric',
           hour: 'numeric',
           minute: 'numeric',
-        })}
+        {date
+          ? `Doors Open ${subtractMinutesFromDate(date, props.value || 0).toLocaleString(undefined, {
+              month: 'long',
+              day: 'numeric',
+              year: 'numeric',
+              hour: 'numeric',
+              minute: 'numeric',
+            })}`
+          : 'Doors Open time unavailable'}
       </Text>
     </Stack>
   )
