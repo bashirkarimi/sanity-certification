@@ -5,7 +5,7 @@ import { defineQuery } from "next-sanity";
 const EVENTS_QUERY = defineQuery(`*[
   _type == "event"
   && defined(slug.current)
-  && date > now()
+  // && date > now()
 ]|order(date asc){_id, name, slug, date}`);
 
 export default async function IndexPage() {
