@@ -92,6 +92,12 @@ export const eventType = defineType({
       title: 'Tickets',
       type: 'url',
     }),
+    defineField({
+      name: 'firstPublished',
+      title: 'First Published',
+      type: 'datetime',
+      readOnly: true,
+    })
   ],
   preview: {
     select: {
