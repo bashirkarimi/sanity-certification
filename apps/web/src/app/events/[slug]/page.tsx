@@ -103,8 +103,7 @@ export default async function EventPage({
                   Doors Open
                 </dd>
                 <div className="grid gap-1">
-                  <dt>Doors Open</dt>
-                  <dt>{doorsOpenTime}</dt>
+                  <dd>{doorsOpenTime}</dd>
                 </div>
               </dl>
             ) : null}
