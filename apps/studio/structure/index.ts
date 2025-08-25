@@ -19,4 +19,6 @@ export const structure: StructureResolver = (S) =>
       S.divider().title('Artists and Venues'),
       S.documentTypeListItem('artist').title('Artists'),
       S.documentTypeListItem('venue').title('Venues'),
+      S.divider().title('Feedback'),
+      S.documentTypeListItem('feedback').title('Feedback'),
     ])
