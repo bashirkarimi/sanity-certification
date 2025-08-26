@@ -1,29 +1,33 @@
 import { DocumentHandle, useDocument } from "@sanity/sdk-react";
-import { Card, Flex, Stack, Text, Container} from "@sanity/ui";
+import { Card, Flex, Stack, Text, Container } from "@sanity/ui";
 import { StatusBadge } from "./status-badge";
 import { Sentiment } from "./sentiment";
 import { Notes } from "./notes";
 import { Actions } from "./actions";
+import { Assignee } from "./assignee";
 
 type FeedbackEditProps = {
   selectedFeedback: DocumentHandle;
 };
 
 export function FeedbackEdit({ selectedFeedback }: FeedbackEditProps) {
-  const { data } = useDocument({...selectedFeedback});
+  const { data } = useDocument({ ...selectedFeedback });
 
   if (!data) {
     return null;
   }
 
-  const author = typeof data.author === 'string' ? data.author : 'No author';
-  const email = typeof data.email === 'string' ? data.email : 'No email';
-  const content = typeof data.content === 'string' ? data.content : 'No content';
-  const createdAt = typeof data._createdAt === 'string' ? data._createdAt.split("T")[0] : 'No date';
-  const status = typeof data.status === 'string' ? data.status : 'PENDING';
-  const sentiment = typeof data.sentiment === 'string' ? data.sentiment : '';
-  const notes = typeof data.notes === 'string' ? data.notes : '';
-  const assignee = typeof data.assignee === 'string' ? data.assignee : 'No assignee';
+  const author = typeof data.author === "string" ? data.author : "";
+  const email = typeof data.email === "string" ? data.email : "";
+  const content = typeof data.content === "string" ? data.content : "";
+  const createdAt =
+    typeof data._createdAt === "string"
+      ? data._createdAt.split("T")[0]
+      : "No date";
+  const status = typeof data.status === "string" ? data.status : "PENDING";
+  const sentiment = typeof data.sentiment === "string" ? data.sentiment : "";
+  const notes = typeof data.notes === "string" ? data.notes : "";
+  const assignee = typeof data.assignee === "string" ? data.assignee : "";
 
   return (
     <Container width={2}>
@@ -55,6 +59,7 @@ export function FeedbackEdit({ selectedFeedback }: FeedbackEditProps) {
             >
               <Actions handle={selectedFeedback} />
             </Flex>
+            <Assignee value={assignee} handle={selectedFeedback} />
           </Stack>
         </Card>
       </Card>
