@@ -4,7 +4,7 @@ import { Flex, Spinner } from "@sanity/ui";
 
 import { SanityUI } from "./SanityUI";
 import { Feedback } from "./feedback";
-import { ExampleComponent } from "./ExampleComponent";
+import { FeedbackEvents } from "./feedback-events";
 
 function App() {
   // apps can access many different projects or other sources of data
@@ -28,7 +28,7 @@ function App() {
       <SanityApp config={sanityConfigs} fallback={<Loading />}>
         {/* add your own components here! */}
         <Feedback />
-        {/* <ExampleComponent /> */}
+        <FeedbackEvents />
       </SanityApp>
     </SanityUI>
   );
