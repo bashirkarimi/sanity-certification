@@ -13,4 +13,5 @@ export default defineCliConfig({
   server: {
     port: 3335,
   },
+  studioHost: "sanity-certification-bashir",
 });
