@@ -55,7 +55,7 @@ export const feedbackType = defineType({
       type: 'string',
     }),
     defineField({
-      name: 'Notes',
+      name: 'notes',
       title: 'Notes',
       type: 'text',
     }),

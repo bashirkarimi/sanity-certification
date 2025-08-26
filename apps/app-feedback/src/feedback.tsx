@@ -4,6 +4,7 @@ import { Card, Flex, Grid, Spinner } from "@sanity/ui"
 import { styled } from "styled-components";
 
 import {FeedbackList} from "./feedback-list";
+import { FeedbackEdit } from "./feedback-edit";
 
 const ScreenHeightCard = styled(Card)`
   height: 100vh;
@@ -22,12 +23,22 @@ export function Feedback() {
   const [selectedFeedback, setSelectedFeedback] = useState<DocumentHandle | null>(null);
 
   return (
-    <Grid columns={5}>
-      <ScreenHeightCard columnStart={1} columnEnd={3}>
+    <Grid columns={6}>
+      <ScreenHeightCard columnStart={1} columnEnd={4}>
         <Suspense fallback={<Loading />}>
-          <FeedbackList setSelectedFeedback={setSelectedFeedback} selectedFeedback={selectedFeedback} />
+          <FeedbackList
+            setSelectedFeedback={setSelectedFeedback}
+            selectedFeedback={selectedFeedback}
+          />
+        </Suspense>
+      </ScreenHeightCard>
+      <ScreenHeightCard columnStart={4} columnEnd={8}>
+        <Suspense fallback={<Loading />}>
+          {selectedFeedback && (
+            <FeedbackEdit selectedFeedback={selectedFeedback} />
+          )}
         </Suspense>
       </ScreenHeightCard>
     </Grid>
-  )
+  );
 }
