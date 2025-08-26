@@ -1,5 +1,119 @@
 [
   {
+    "name": "feedback",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "feedback"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "content": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "author": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "sentiment": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "positive"
+            },
+            {
+              "type": "string",
+              "value": "neutral"
+            },
+            {
+              "type": "string",
+              "value": "negative"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "status": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "union",
+          "of": [
+            {
+              "type": "string",
+              "value": "pending"
+            },
+            {
+              "type": "string",
+              "value": "approved"
+            },
+            {
+              "type": "string",
+              "value": "spam"
+            }
+          ]
+        },
+        "optional": true
+      },
+      "assignee": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "Notes": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      }
+    }
+  },
+  {
     "name": "event",
     "type": "document",
     "attributes": {
@@ -389,6 +503,13 @@
         "optional": true
       },
       "tickets": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "firstPublished": {
         "type": "objectAttribute",
         "value": {
           "type": "string"

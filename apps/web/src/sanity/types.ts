@@ -13,6 +13,21 @@
  */
 
 // Source: schema.json
+export type Feedback = {
+  _id: string;
+  _type: "feedback";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  content?: string;
+  author?: string;
+  email?: string;
+  sentiment?: "positive" | "neutral" | "negative";
+  status?: "pending" | "approved" | "spam";
+  assignee?: string;
+  Notes?: string;
+};
+
 export type Event = {
   _id: string;
   _type: "event";
@@ -67,6 +82,7 @@ export type Event = {
     _key: string;
   }>;
   tickets?: string;
+  firstPublished?: string;
 };
 
 export type Artist = {
@@ -229,7 +245,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Event | Artist | Venue | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Feedback | Event | Artist | Venue | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../web/src/app/events/[slug]/page.tsx
 // Variable: EVENT_QUERY
@@ -307,6 +323,7 @@ export type EVENT_QUERYResult = {
     _key: string;
   }>;
   tickets?: string;
+  firstPublished?: string;
 } | null;
 
 // Source: ../web/src/app/page.tsx
