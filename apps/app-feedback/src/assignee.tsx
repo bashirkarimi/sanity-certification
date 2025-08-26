@@ -10,7 +10,6 @@ export function Assignee({ value, handle }: AssigneeProps) {
   const {data: users } = useUsers();
   const editAssignee = useEditDocument({...handle, path: "assignee" });
 
-
   return (
     <Stack space={4}>
       <Text >Assignee</Text>
