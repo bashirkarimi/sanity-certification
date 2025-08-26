@@ -2,7 +2,7 @@ import { type SanityConfig } from "@sanity/sdk";
 import { SanityApp } from "@sanity/sdk-react";
 import { Flex, Spinner } from "@sanity/ui";
 
-import { SanityUI } from "./SanityUI";
+import { SanityUI } from "./sanity-ui";
 import { Feedback } from "./feedback";
 import { FeedbackEvents } from "./feedback-events";
 
