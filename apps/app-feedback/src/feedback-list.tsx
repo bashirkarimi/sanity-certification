@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import { FeedbackPreview } from "./feedback-preview";
 import { OnlyMine } from "./only-mine";
 import { StatusSelector } from "./status-selector";
+import { FeedbackPreviewSelected } from "./feedback-preview-selected";
 
 type FeedbackListProps = {
   selectedFeedback: DocumentHandle | null;
@@ -48,7 +49,11 @@ export function FeedbackList({
             justify="flex-start"
           >
             <Suspense fallback={<Spinner />}>
-              <FeedbackPreview {...feedback} />
+              {isSelected ? (
+                <FeedbackPreviewSelected {...feedback} />
+              ) : (
+                <FeedbackPreview {...feedback} />
+              )}
             </Suspense>
           </Button>
         );
