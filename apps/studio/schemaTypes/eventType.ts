@@ -27,13 +27,15 @@ export const eventType = defineType({
       readOnly: ({value, currentUser}) => {
         if (!value) return false
         if (!currentUser || !Array.isArray(currentUser.roles)) return false
-        const isAdmin = currentUser.roles.some((role) => role && typeof role.name === 'string' && role.name === 'administrator')
+        const isAdmin = currentUser.roles.some(
+          (role) => role && typeof role.name === 'string' && role.name === 'administrator',
+        )
         return !isAdmin
       },
     }),
     defineField({
-      name: 'eventType',
-      title: 'Event Type',
+      name: 'format',
+      title: 'Event Format',
       type: 'string',
       options: {
         list: [
@@ -42,6 +44,7 @@ export const eventType = defineType({
         ],
         layout: 'radio',
       },
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'date',
@@ -97,7 +100,7 @@ export const eventType = defineType({
       title: 'First Published',
       type: 'datetime',
       readOnly: true,
-    })
+    }),
   ],
   preview: {
     select: {

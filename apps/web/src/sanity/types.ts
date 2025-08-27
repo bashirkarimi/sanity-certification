@@ -25,7 +25,7 @@ export type Feedback = {
   sentiment?: "positive" | "neutral" | "negative";
   status?: "pending" | "approved" | "spam";
   assignee?: string;
-  Notes?: string;
+  notes?: string;
 };
 
 export type Event = {
@@ -36,7 +36,7 @@ export type Event = {
   _rev: string;
   name?: string;
   slug?: Slug;
-  eventType?: "in-person" | "virtual";
+  format?: "in-person" | "virtual";
   date?: string;
   doorsOpen?: number;
   venue?: {
@@ -258,7 +258,7 @@ export type EVENT_QUERYResult = {
   _rev: string;
   name?: string;
   slug?: Slug;
-  eventType?: "in-person" | "virtual";
+  format?: "in-person" | "virtual";
   date: string;
   doorsOpen: number | 0;
   venue: {

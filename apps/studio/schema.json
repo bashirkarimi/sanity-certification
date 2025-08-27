@@ -104,7 +104,7 @@
         },
         "optional": true
       },
-      "Notes": {
+      "notes": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -163,7 +163,7 @@
         },
         "optional": true
       },
-      "eventType": {
+      "format": {
         "type": "objectAttribute",
         "value": {
           "type": "union",
