@@ -2,12 +2,12 @@ import {getCliClient} from 'sanity/cli'
 
 const client = getCliClient({apiVersion: '2025-07-09'})
 const EVENT_QUERY = `*[
-  _type == "event" 
-  && defined(headline) 
-  && defined(venue) 
+  _type == "event"
+  && defined(headline)
+  && defined(venue)
   && !defined(details)][0]{
     _id, 
-    headline->{ name }, 
+    headline->{ name },
     venue->{ name }
 }`
 
@@ -24,8 +24,7 @@ async function run() {
     .generate({
       schemaId: '_.schemas.default',
       documentId: event._id,
-      instruction:
-        'Create a short description of what attendees can expect when they come to this event. The headline artist is "$headline" and the venue is "$venue".',
+      instruction:'Create a short description of what attendees can expect when they come to this event. The headline artist is "$headline" and the venue is "$venue".',
       instructionParams: {
         headline: event.headline.name,
         venue: event.venue.name,
