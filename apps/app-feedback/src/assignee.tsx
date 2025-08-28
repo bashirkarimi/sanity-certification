@@ -21,9 +21,9 @@ export function Assignee({ value, handle }: AssigneeProps) {
             mode="bleed"
             onClick={() => editAssignee(user.sanityUserId)}
           >
-            <Avatar 
+            <Avatar
               status={value=== user.sanityUserId ? "online" : "inactive"}
-              size={2} 
+              size={2}
               src={user.profile?.imageUrl}>
             </Avatar>
           </Button>

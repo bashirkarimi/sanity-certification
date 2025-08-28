@@ -1,9 +1,9 @@
 import { Suspense, useState, startTransition } from "react";
 import { DocumentHandle } from "@sanity/sdk-react";
-import { Card, Flex, Grid, Spinner } from "@sanity/ui"
+import { Card, Flex, Grid, Spinner } from "@sanity/ui";
 import { styled } from "styled-components";
 
-import {FeedbackList} from "./feedback-list";
+import { FeedbackList } from "./feedback-list";
 import { FeedbackEdit } from "./feedback-edit";
 
 const ScreenHeightCard = styled(Card)`
@@ -13,14 +13,15 @@ const ScreenHeightCard = styled(Card)`
 
 function Loading() {
   return (
-    <Flex direction="column" padding={4}>
+    <Flex justify="center" align="center" width="fill" height="fill">
       <Spinner />
     </Flex>
-  )
-};
+  );
+}
 
 export function Feedback() {
-  const [selectedFeedback, setSelectedFeedback] = useState<DocumentHandle | null>(null);
+  const [selectedFeedback, setSelectedFeedback] =
+    useState<DocumentHandle | null>(null);
   const updateSelectedFeedback = (handle: DocumentHandle | null) => {
     startTransition(() => {
       setSelectedFeedback(handle);

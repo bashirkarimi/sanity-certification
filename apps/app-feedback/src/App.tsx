@@ -26,7 +26,6 @@ function App() {
   return (
     <SanityUI>
       <SanityApp config={sanityConfigs} fallback={<Loading />}>
-        {/* add your own components here! */}
         <Feedback />
         <FeedbackEvents />
       </SanityApp>
