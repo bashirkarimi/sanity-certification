@@ -1,6 +1,6 @@
 import {getCliClient} from 'sanity/cli'
 
-const client = getCliClient({apiVersion: '2025-07-09'})
+const client = getCliClient({apiVersion: '2022-06-30'})
 const EVENT_QUERY = `*[
   _type == "event"
   && defined(headline)
