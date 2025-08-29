@@ -1,10 +1,10 @@
 import { defineQuery, PortableText } from "next-sanity";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import Image from "next/image";
-
+import { notFound } from "next/navigation";
 import { sanityFetch } from "@/sanity/live";
 import { urlFor } from "@/sanity/image";
+import { RelatedEvents } from "@/components/related-events";
 
 const EVENT_QUERY = defineQuery(`*[
     _type == "event" &&
@@ -14,7 +14,14 @@ const EVENT_QUERY = defineQuery(`*[
   "date": coalesce(date, now()),
   "doorsOpen": coalesce(doorsOpen, 0),
   headline->,
-  venue->
+  venue->,
+  relatedEvents[]{
+    _key,
+    ...@->{
+      name,
+      slug,
+    }
+  }
 }`);
 
 export default async function EventPage({
@@ -30,6 +37,7 @@ export default async function EventPage({
     notFound();
   }
   const {
+    _id,
     name,
     date,
     headline,
@@ -38,6 +46,7 @@ export default async function EventPage({
     doorsOpen,
     venue,
     tickets,
+    relatedEvents,
   } = event;
 
   const eventDate = new Date(date).toDateString();
@@ -133,6 +142,14 @@ export default async function EventPage({
             >
               Buy Tickets
             </a>
+          )}
+
+          {relatedEvents && relatedEvents.length > 0 && (
+            <RelatedEvents
+              relatedEvents={relatedEvents}
+              documentId={_id}
+              documentType="event"
+            />
           )}
         </div>
       </div>
