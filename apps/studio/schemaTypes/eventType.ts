@@ -101,6 +101,12 @@ export const eventType = defineType({
       type: 'datetime',
       readOnly: true,
     }),
+    defineField({
+      name: 'relatedEvents',
+      title: 'Related Events',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'event'}]}],
+    }),
   ],
   preview: {
     select: {

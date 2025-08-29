@@ -83,6 +83,13 @@ export type Event = {
   }>;
   tickets?: string;
   firstPublished?: string;
+  relatedEvents?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "event";
+  }>;
 };
 
 export type Artist = {
@@ -249,7 +256,7 @@ export type AllSanitySchemaTypes = Feedback | Event | Artist | Venue | MediaTag 
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../web/src/app/events/[slug]/page.tsx
 // Variable: EVENT_QUERY
-// Query: *[    _type == "event" &&    slug.current == $slug  ][0]{  ...,  "date": coalesce(date, now()),  "doorsOpen": coalesce(doorsOpen, 0),  headline->,  venue->}
+// Query: *[    _type == "event" &&    slug.current == $slug  ][0]{  ...,  "date": coalesce(date, now()),  "doorsOpen": coalesce(doorsOpen, 0),  headline->,  venue->,  relatedEvents[]{    _key,    ...@->{      name,      slug,    }  }}
 export type EVENT_QUERYResult = {
   _id: string;
   _type: "event";
@@ -324,6 +331,11 @@ export type EVENT_QUERYResult = {
   }>;
   tickets?: string;
   firstPublished?: string;
+  relatedEvents: Array<{
+    _key: string;
+    name: string | null;
+    slug: Slug | null;
+  }> | null;
 } | null;
 
 // Source: ../web/src/app/page.tsx
@@ -340,7 +352,7 @@ export type EVENTS_QUERYResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[\n    _type == \"event\" &&\n    slug.current == $slug\n  ][0]{\n  ...,\n  \"date\": coalesce(date, now()),\n  \"doorsOpen\": coalesce(doorsOpen, 0),\n  headline->,\n  venue->\n}": EVENT_QUERYResult;
+    "*[\n    _type == \"event\" &&\n    slug.current == $slug\n  ][0]{\n  ...,\n  \"date\": coalesce(date, now()),\n  \"doorsOpen\": coalesce(doorsOpen, 0),\n  headline->,\n  venue->,\n  relatedEvents[]{\n    _key,\n    ...@->{\n      name,\n      slug,\n    }\n  }\n}": EVENT_QUERYResult;
     "*[\n  _type == \"event\"\n  && defined(slug.current)\n  // && date > now()\n]|order(date asc){_id, name, slug, date}": EVENTS_QUERYResult;
   }
 }

@@ -6,7 +6,7 @@ export const handler = documentEventHandler(async ({ context, event }) => {
     await createClient({
       ...context.clientOptions,
       useCdn: false,
-      apiVersion: '2025-05-08'
+      apiVersion: '2022-06-30',
     })
       .patch(event.data._id)
       .setIfMissing({

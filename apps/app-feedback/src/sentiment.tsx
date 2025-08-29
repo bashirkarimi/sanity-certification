@@ -17,7 +17,7 @@ function titleCase(str: string) {
 const SCHEMA_ID = "_.schemas.default";
 
 export function Sentiment({ feedback, value, handle }: SentimentProps) {
-  const client = useClient({ apiVersion: "vX" });
+  const client = useClient({ apiVersion: "2022-06-30" });
   const toast = useToast();
 
   function assessSentiment() {
