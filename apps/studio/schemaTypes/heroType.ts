@@ -1,8 +1,10 @@
 import {defineField, defineType} from 'sanity'
+import {TextIcon} from '@sanity/icons'
 
 export const heroType = defineType({
   name: 'hero',
   type: 'object',
+  icon: TextIcon,
   fields: [
     defineField({
       name: 'title',
@@ -26,7 +28,7 @@ export const heroType = defineType({
       const {title, media} = selection
       return {
         title,
-        media,
+        media: media ?? TextIcon,
       }
     },
   },

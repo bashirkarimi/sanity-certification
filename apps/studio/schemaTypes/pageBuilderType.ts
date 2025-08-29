@@ -7,4 +7,13 @@ export const pageBuilderType = defineType({
     defineArrayMember({type: 'hero'}),
     defineArrayMember({type: 'event'}),
   ],
+  options: {
+    insertMenu: {
+      views: [
+        {name: "grid",
+          previewImageUrl: (schemaType) => `/block-previews/${schemaType}.png`
+        }
+      ]
+    }
+  },
 })
