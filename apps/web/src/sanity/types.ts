@@ -490,7 +490,7 @@ export type PAGE_QUERYResult = {
   }> | null;
 } | null;
 // Variable: HOME_PAGE_QUERY
-// Query: *[_id == "siteSettings"][0]{    homePage->{      ...,      content[]{        ...,        _key,        _type,        _type == "reference" => {          "resolved": @-> {...}          },        }    }  }
+// Query: *[_id == "siteSettings"][0]{  homePage->{    ...,    content[]{      ...,      _key,      _type,      _type == "reference" => {        "resolved": @-> {...}        },      }  }}
 export type HOME_PAGE_QUERYResult = {
   homePage: null;
 } | {
@@ -654,6 +654,6 @@ declare module "@sanity/client" {
     "*[\n    _type == \"event\" &&\n    slug.current == $slug\n  ][0]{\n  ...,\n  \"date\": coalesce(date, now()),\n  \"doorsOpen\": coalesce(doorsOpen, 0),\n  headline->,\n  venue->,\n  relatedEvents[]{\n    _key,\n    ...@->{\n      name,\n      slug,\n    }\n  }\n}": EVENT_QUERYResult;
     "*[\n  _type == \"event\"\n  && defined(slug.current)\n  // && date > now()\n]|order(date asc){_id, name, slug, date}": EVENTS_QUERYResult;
     "*[_type == \"page\" && slug.current == $slug][0] {\n  _id,\n  title,\n  slug,\n  content\n}": PAGE_QUERYResult;
-    "*[_id == \"siteSettings\"][0]{\n    homePage->{\n      ...,\n      content[]{\n        ...,\n        _key,\n        _type,\n        _type == \"reference\" => {\n          \"resolved\": @-> {...}\n          },\n        }\n    }\n  }": HOME_PAGE_QUERYResult;
+    "*[_id == \"siteSettings\"][0]{\n  homePage->{\n    ...,\n    content[]{\n      ...,\n      _key,\n      _type,\n      _type == \"reference\" => {\n        \"resolved\": @-> {...}\n        },\n      }\n  }\n}": HOME_PAGE_QUERYResult;
   }
 }
