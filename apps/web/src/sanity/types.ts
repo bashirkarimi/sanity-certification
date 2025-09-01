@@ -13,6 +13,34 @@
  */
 
 // Source: schema.json
+export type Features = {
+  _type: "features";
+  title?: string;
+  features?: Array<{
+    title?: string;
+    text?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    _type: "feature";
+    _key: string;
+  }>;
+};
+
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
@@ -43,7 +71,9 @@ export type Page = {
     _weak?: boolean;
     _key: string;
     [internalGroqTypeReferenceTo]?: "event";
-  }>;
+  } | {
+    _key: string;
+  } & Features>;
   mainImage?: {
     asset?: {
       _ref: string;
@@ -66,7 +96,9 @@ export type PageBuilder = Array<{
   _weak?: boolean;
   _key: string;
   [internalGroqTypeReferenceTo]?: "event";
-}>;
+} | {
+  _key: string;
+} & Features>;
 
 export type Hero = {
   _type: "hero";
@@ -342,7 +374,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = SiteSettings | Page | PageBuilder | Hero | Feedback | Event | Artist | Venue | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Features | SiteSettings | Page | PageBuilder | Hero | Feedback | Event | Artist | Venue | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../web/src/app/events/[slug]/page.tsx
 // Variable: EVENT_QUERY
@@ -447,6 +479,8 @@ export type PAGE_QUERYResult = {
   slug: Slug | null;
   content: Array<{
     _key: string;
+  } & Features | {
+    _key: string;
   } & Hero | {
     _ref: string;
     _type: "reference";
@@ -536,6 +570,33 @@ export type HOME_PAGE_QUERYResult = {
           [internalGroqTypeReferenceTo]?: "event";
         }>;
       };
+    } | {
+      _key: string;
+      _type: "features";
+      title?: string;
+      features?: Array<{
+        title?: string;
+        text?: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }>;
+        _type: "feature";
+        _key: string;
+      }>;
     } | {
       _key: string;
       _type: "hero";
