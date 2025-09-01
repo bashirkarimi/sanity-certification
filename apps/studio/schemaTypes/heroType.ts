@@ -24,11 +24,13 @@ export const heroType = defineType({
     select: {
       title: 'title',
       media: 'image',
+      subtitle: '_type',
     },
     prepare(selection) {
-      const {title, media} = selection
+      const {title, media, subtitle} = selection
       return {
         title,
+        subtitle: ` ${subtitle}: `,
         media: media ?? TextIcon,
       }
     },

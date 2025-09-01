@@ -113,11 +113,12 @@ export const eventType = defineType({
       artist: 'headline.name',
       venue: 'venue.name',
       media: 'image',
+      _type: '_type'
     },
-    prepare({title, media, artist, venue}) {
+    prepare({title, media, artist, venue, _type}) {
       return {
         title,
-        subtitle: artist + ', ' + venue,
+        subtitle: `${_type}: ${artist}, ${venue}`,
         media: media || CalendarIcon,
       }
     },
