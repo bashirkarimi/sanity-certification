@@ -12,7 +12,11 @@ export const HOME_PAGE_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
     homePage->{
       ...,
       content[]{
-        ...,
-      }
+        _key,
+        _type,
+        _type == "reference" => {
+          "resolved": @-> {...}
+          },
+        }
     }
   }`);
