@@ -13,6 +13,128 @@
  */
 
 // Source: schema.json
+export type Features = {
+  _type: "features";
+  title?: string;
+  features?: Array<{
+    title?: string;
+    text?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    _type: "feature";
+    _key: string;
+  }>;
+};
+
+export type SiteSettings = {
+  _id: string;
+  _type: "siteSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  homePage?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  };
+};
+
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  content?: Array<{
+    _key: string;
+  } & Hero | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "event";
+  } | {
+    _key: string;
+  } & Features>;
+  mainImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
+export type PageBuilder = Array<{
+  _key: string;
+} & Hero | {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  _key: string;
+  [internalGroqTypeReferenceTo]?: "event";
+} | {
+  _key: string;
+} & Features>;
+
+export type Hero = {
+  _type: "hero";
+  title?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
 export type Feedback = {
   _id: string;
   _type: "feedback";
@@ -252,7 +374,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Feedback | Event | Artist | Venue | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Features | SiteSettings | Page | PageBuilder | Hero | Feedback | Event | Artist | Venue | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../web/src/app/events/[slug]/page.tsx
 // Variable: EVENT_QUERY
@@ -338,7 +460,7 @@ export type EVENT_QUERYResult = {
   }> | null;
 } | null;
 
-// Source: ../web/src/app/page.tsx
+// Source: ../web/src/app/events/page.tsx
 // Variable: EVENTS_QUERY
 // Query: *[  _type == "event"  && defined(slug.current)  // && date > now()]|order(date asc){_id, name, slug, date}
 export type EVENTS_QUERYResult = Array<{
@@ -348,11 +470,190 @@ export type EVENTS_QUERYResult = Array<{
   date: string | null;
 }>;
 
+// Source: ../web/src/sanity/lib/queries.ts
+// Variable: PAGE_QUERY
+// Query: *[_type == "page" && slug.current == $slug][0] {  _id,  title,  slug,  content}
+export type PAGE_QUERYResult = {
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  content: Array<{
+    _key: string;
+  } & Features | {
+    _key: string;
+  } & Hero | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "event";
+  }> | null;
+} | null;
+// Variable: HOME_PAGE_QUERY
+// Query: *[_id == "siteSettings"][0]{  homePage->{    ...,    content[]{      ...,      _key,      _type,      _type == "reference" => {        "resolved": @-> {...}        },      }  }}
+export type HOME_PAGE_QUERYResult = {
+  homePage: null;
+} | {
+  homePage: {
+    _id: string;
+    _type: "page";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    title?: string;
+    slug?: Slug;
+    content: Array<{
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      _key: string;
+      resolved: {
+        _id: string;
+        _type: "event";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        name?: string;
+        slug?: Slug;
+        format?: "in-person" | "virtual";
+        date?: string;
+        doorsOpen?: number;
+        venue?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "venue";
+        };
+        headline?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "artist";
+        };
+        image?: {
+          asset?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+          };
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        };
+        details?: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }>;
+        tickets?: string;
+        firstPublished?: string;
+        relatedEvents?: Array<{
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          _key: string;
+          [internalGroqTypeReferenceTo]?: "event";
+        }>;
+      };
+    } | {
+      _key: string;
+      _type: "features";
+      title?: string;
+      features?: Array<{
+        title?: string;
+        text?: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }>;
+        _type: "feature";
+        _key: string;
+      }>;
+    } | {
+      _key: string;
+      _type: "hero";
+      title?: string;
+      text?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }>;
+      image?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+    }> | null;
+    mainImage?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+  } | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[\n    _type == \"event\" &&\n    slug.current == $slug\n  ][0]{\n  ...,\n  \"date\": coalesce(date, now()),\n  \"doorsOpen\": coalesce(doorsOpen, 0),\n  headline->,\n  venue->,\n  relatedEvents[]{\n    _key,\n    ...@->{\n      name,\n      slug,\n    }\n  }\n}": EVENT_QUERYResult;
     "*[\n  _type == \"event\"\n  && defined(slug.current)\n  // && date > now()\n]|order(date asc){_id, name, slug, date}": EVENTS_QUERYResult;
+    "*[_type == \"page\" && slug.current == $slug][0] {\n  _id,\n  title,\n  slug,\n  content\n}": PAGE_QUERYResult;
+    "*[_id == \"siteSettings\"][0]{\n  homePage->{\n    ...,\n    content[]{\n      ...,\n      _key,\n      _type,\n      _type == \"reference\" => {\n        \"resolved\": @-> {...}\n        },\n      }\n  }\n}": HOME_PAGE_QUERYResult;
   }
 }

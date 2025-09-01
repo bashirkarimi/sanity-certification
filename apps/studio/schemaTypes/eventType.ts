@@ -21,17 +21,16 @@ export const eventType = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: {source: 'name'},
-      hidden: ({document}) => !document?.name,
+      options: {source: (doc: any) => doc?.name || 'name'},
       validation: (rule) => rule.required().error('Slug is required'),
-      readOnly: ({value, currentUser}) => {
-        if (!value) return false
-        if (!currentUser || !Array.isArray(currentUser.roles)) return false
-        const isAdmin = currentUser.roles.some(
-          (role) => role && typeof role.name === 'string' && role.name === 'administrator',
-        )
-        return !isAdmin
-      },
+      // readOnly: ({value, currentUser}) => {
+      //   if (!value) return false
+      //   if (!currentUser || !Array.isArray(currentUser.roles)) return false
+      //   const isAdmin = currentUser.roles.some(
+      //     (role) => role && typeof role.name === 'string' && role.name === 'administrator',
+      //   )
+      //   return !isAdmin
+      // },
     }),
     defineField({
       name: 'format',
@@ -114,11 +113,12 @@ export const eventType = defineType({
       artist: 'headline.name',
       venue: 'venue.name',
       media: 'image',
+      _type: '_type'
     },
-    prepare({title, media, artist, venue}) {
+    prepare({title, media, artist, venue, _type}) {
       return {
         title,
-        subtitle: artist + ', ' + venue,
+        subtitle: `${_type}: ${artist}, ${venue}`,
         media: media || CalendarIcon,
       }
     },

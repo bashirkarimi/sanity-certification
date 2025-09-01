@@ -26,14 +26,15 @@ export default defineConfig({
           enable: 'http://localhost:3000/api/draft-mode/enable',
         },
       },
-      allowOrigins: [
-        'http://localhost:3000',
-        'http://127.0.0.1:3000',
-      ],
+      allowOrigins: ['http://localhost:3000', 'http://127.0.0.1:3000'],
     }),
   ],
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    newDocumentOptions: (prev) => prev.filter((item) => item.templateId !== 'siteSettings'),
   },
 })
