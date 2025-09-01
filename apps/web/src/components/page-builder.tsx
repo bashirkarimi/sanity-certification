@@ -1,24 +1,13 @@
 import { Event } from "./event";
 import { Hero } from "./hero";
 
-import { PAGE_QUERYResult } from "@/sanity/types";
+import { HOME_PAGE_QUERYResult } from "@/sanity/types";
 
-type ReferenceBlock = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  _key: string;
-  resolved?: {
-    _type: string;
-    [key: string]: any;
-  };
-};
-
-type PageBuilderProps = {
-  content: (NonNullable<PAGE_QUERYResult>["content"][number] | ReferenceBlock)[];
-};
-
-export function PageBuilder({ content }: PageBuilderProps) {
+export function PageBuilder({
+  content,
+}: {
+  content: HOME_PAGE_QUERYResult extends { content?: any[] } ? HOME_PAGE_QUERYResult["content"] : any[];
+}) {
   if (!Array.isArray(content)) {
     return null;
   }
