@@ -4,7 +4,7 @@ export function Event(props: any) {
   return (
     <div className="flex  flex-col p-2 gap-1">
       <ul className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-        {Array({...props}).map((event:any) => (
+        {(Array.isArray(props) ? props : []).map((event:any) => (
           <li
             className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm dark:shadow-gray-900/20"
             key={event._key}
