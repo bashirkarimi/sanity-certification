@@ -28,3 +28,12 @@ export const HOME_PAGE_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
       }
   }
 }`);
+
+export const REDIRECTS_QUERY = defineQuery(
+  `*[_type == "redirect" && isEnabled == true] {
+    _id,
+    source,
+    destination,
+    permanent,
+  }`
+);

@@ -13,6 +13,18 @@
  */
 
 // Source: schema.json
+export type Redirect = {
+  _id: string;
+  _type: "redirect";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  source?: string;
+  destination?: string;
+  permanent?: boolean;
+  isEnabled?: boolean;
+};
+
 export type Features = {
   _type: "features";
   title?: string;
@@ -394,7 +406,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Features | SiteSettings | Page | Seo | PageBuilder | Hero | Feedback | Event | Artist | Venue | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Redirect | Features | SiteSettings | Page | Seo | PageBuilder | Hero | Feedback | Event | Artist | Venue | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../web/src/app/events/[slug]/page.tsx
 // Variable: EVENT_QUERY
@@ -713,6 +725,14 @@ export type HOME_PAGE_QUERYResult = {
     };
   } | null;
 } | null;
+// Variable: REDIRECTS_QUERY
+// Query: *[_type == "redirect" && isEnabled == true] {    _id,    source,    destination,    permanent,  }
+export type REDIRECTS_QUERYResult = Array<{
+  _id: string;
+  source: string | null;
+  destination: string | null;
+  permanent: boolean | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -722,5 +742,6 @@ declare module "@sanity/client" {
     "*[\n  _type == \"event\"\n  && defined(slug.current)\n  // && date > now()\n]|order(date asc){_id, name, slug, date}": EVENTS_QUERYResult;
     "*[_type == \"page\" && slug.current == $slug][0] {\n  _id,\n  title,\n  slug,\n  content\n}": PAGE_QUERYResult;
     "*[_id == \"siteSettings\"][0]{\n  homePage->{\n    ...,\n    \"seo\": {\n      ...,\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"image\": seo.image,\n      \"noIndex\": seo.noIndex\n    },\n    content[]{\n      ...,\n      _key,\n      _type,\n      _type == \"reference\" => {\n        \"resolved\": @-> {...}\n        },\n      }\n  }\n}": HOME_PAGE_QUERYResult;
+    "*[_type == \"redirect\" && isEnabled == true] {\n    _id,\n    source,\n    destination,\n    permanent,\n  }": REDIRECTS_QUERYResult;
   }
 }
