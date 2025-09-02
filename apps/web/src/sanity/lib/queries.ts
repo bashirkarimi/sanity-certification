@@ -37,3 +37,16 @@ export const REDIRECTS_QUERY = defineQuery(
     permanent,
   }`
 );
+
+export const OG_IMAGE_QUERY = defineQuery(`
+  *[_id == $id][0]{
+    title,
+    "description":seo.description,
+    "image": mainImage.asset->{
+      url,
+      "metadata": {
+        palette
+      }
+    }
+  }
+`);

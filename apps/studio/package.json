@@ -21,10 +21,10 @@
     "@sanity/client": "^7.9.0",
     "@sanity/icons": "^3.7.4",
     "@sanity/ui": "^3.0.7",
-    "@sanity/vision": "^4.5.0",
+    "@sanity/vision": "^4.6.0",
     "react": "^19.1",
     "react-dom": "^19.1",
-    "sanity": "^4.5.0",
+    "sanity": "^4.6.0",
     "sanity-plugin-documents-pane": "^2.4.1",
     "sanity-plugin-media": "^4.0.0",
     "styled-components": "^6.1.18"
@@ -32,11 +32,11 @@
   "devDependencies": {
     "@sanity/blueprints": "0.2.0",
     "@sanity/eslint-config-studio": "^5.0.2",
+    "@sanity/functions": "1.0.3",
     "@types/react": "^19.1",
     "eslint": "^9.28",
     "prettier": "^3.5",
-    "typescript": "^5.8",
-    "@sanity/functions": "1.0.3"
+    "typescript": "^5.8"
   },
   "prettier": {
     "semi": false,
