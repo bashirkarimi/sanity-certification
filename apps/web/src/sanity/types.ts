@@ -86,6 +86,13 @@ export type Page = {
     crop?: SanityImageCrop;
     _type: "image";
   };
+  seo?: Seo;
+};
+
+export type Seo = {
+  _type: "seo";
+  title?: string;
+  description?: string;
 };
 
 export type PageBuilder = Array<{
@@ -374,7 +381,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Features | SiteSettings | Page | PageBuilder | Hero | Feedback | Event | Artist | Venue | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Features | SiteSettings | Page | Seo | PageBuilder | Hero | Feedback | Event | Artist | Venue | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../web/src/app/events/[slug]/page.tsx
 // Variable: EVENT_QUERY
@@ -490,7 +497,7 @@ export type PAGE_QUERYResult = {
   }> | null;
 } | null;
 // Variable: HOME_PAGE_QUERY
-// Query: *[_id == "siteSettings"][0]{  homePage->{    ...,    content[]{      ...,      _key,      _type,      _type == "reference" => {        "resolved": @-> {...}        },      }  }}
+// Query: *[_id == "siteSettings"][0]{  homePage->{    ...,    "seo": {      ...,      "title": coalesce(seo.title, title, ""),      "description": coalesce(seo.description, "")    },    content[]{      ...,      _key,      _type,      _type == "reference" => {        "resolved": @-> {...}        },      }  }}
 export type HOME_PAGE_QUERYResult = {
   homePage: null;
 } | {
@@ -644,6 +651,40 @@ export type HOME_PAGE_QUERYResult = {
       crop?: SanityImageCrop;
       _type: "image";
     };
+    seo: {
+      _id: string;
+      _type: "page";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      title: string | "";
+      slug?: Slug;
+      content?: Array<{
+        _key: string;
+      } & Features | {
+        _key: string;
+      } & Hero | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        _key: string;
+        [internalGroqTypeReferenceTo]?: "event";
+      }>;
+      mainImage?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+      seo?: Seo;
+      description: string | "";
+    };
   } | null;
 } | null;
 
@@ -654,6 +695,6 @@ declare module "@sanity/client" {
     "*[\n    _type == \"event\" &&\n    slug.current == $slug\n  ][0]{\n  ...,\n  \"date\": coalesce(date, now()),\n  \"doorsOpen\": coalesce(doorsOpen, 0),\n  headline->,\n  venue->,\n  relatedEvents[]{\n    _key,\n    ...@->{\n      name,\n      slug,\n    }\n  }\n}": EVENT_QUERYResult;
     "*[\n  _type == \"event\"\n  && defined(slug.current)\n  // && date > now()\n]|order(date asc){_id, name, slug, date}": EVENTS_QUERYResult;
     "*[_type == \"page\" && slug.current == $slug][0] {\n  _id,\n  title,\n  slug,\n  content\n}": PAGE_QUERYResult;
-    "*[_id == \"siteSettings\"][0]{\n  homePage->{\n    ...,\n    content[]{\n      ...,\n      _key,\n      _type,\n      _type == \"reference\" => {\n        \"resolved\": @-> {...}\n        },\n      }\n  }\n}": HOME_PAGE_QUERYResult;
+    "*[_id == \"siteSettings\"][0]{\n  homePage->{\n    ...,\n    \"seo\": {\n      ...,\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\")\n    },\n    content[]{\n      ...,\n      _key,\n      _type,\n      _type == \"reference\" => {\n        \"resolved\": @-> {...}\n        },\n      }\n  }\n}": HOME_PAGE_QUERYResult;
   }
 }

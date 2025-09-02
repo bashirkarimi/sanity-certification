@@ -7,6 +7,7 @@ import {pageBuilderType} from './pageBuilderType'
 import {pageType} from './pageType'
 import {siteSettingsType} from './siteSettingsType'
 import { featuresType } from './featuresType'
+import { seoType } from './seoType'
 
 export const schemaTypes = [
   eventType,
@@ -18,4 +19,5 @@ export const schemaTypes = [
   pageType,
   siteSettingsType,
   featuresType,
+  seoType
 ]
