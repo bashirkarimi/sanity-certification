@@ -14,7 +14,9 @@ export const HOME_PAGE_QUERY = defineQuery(`*[_id == "siteSettings"][0]{
     "seo": {
       ...,
       "title": coalesce(seo.title, title, ""),
-      "description": coalesce(seo.description, "")
+      "description": coalesce(seo.description, ""),
+      "image": seo.image,
+      "noIndex": seo.noIndex
     },
     content[]{
       ...,

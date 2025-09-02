@@ -15,5 +15,18 @@ export const seoType = defineType({
       title: 'Description',
       type: 'text',
     }),
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: 'noIndex',
+      title: 'No Index',
+      type: 'boolean',
+    }),
   ],
 })
