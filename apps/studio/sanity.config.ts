@@ -7,6 +7,7 @@ import {structure} from './structure'
 import {defaultDocumentNode} from './structure/default-document-node'
 import {media} from 'sanity-plugin-media'
 import {resolve} from './presentation/resolve'
+import { assist } from '@sanity/assist'
 
 export default defineConfig({
   name: 'default',
@@ -28,6 +29,7 @@ export default defineConfig({
       },
       allowOrigins: ['http://localhost:3000', 'http://127.0.0.1:3000'],
     }),
+    assist(),
   ],
 
   schema: {
