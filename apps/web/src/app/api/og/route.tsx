@@ -5,10 +5,6 @@ import { ImageResponse } from "next/og"
 import { urlFor } from "@/sanity/image";
 
 export const runtime = "edge";
-const dimensions = {
-  width: 1200,
-  height: 630,
-};
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
