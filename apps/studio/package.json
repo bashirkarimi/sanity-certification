@@ -21,10 +21,10 @@
     "@sanity/client": "^7.9.0",
     "@sanity/icons": "^3.7.4",
     "@sanity/ui": "^3.0.7",
-    "@sanity/vision": "^4.6.0",
+    "@sanity/vision": "^4.6.1",
     "react": "^19.1",
     "react-dom": "^19.1",
-    "sanity": "^4.6.0",
+    "sanity": "^4.6.1",
     "sanity-plugin-documents-pane": "^2.4.1",
     "sanity-plugin-media": "^4.0.0",
     "styled-components": "^6.1.18"

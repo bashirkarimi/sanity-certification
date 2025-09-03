@@ -26,15 +26,17 @@ export async function generateMetadata({
     description: page?.homePage?.seo?.description,
   };
 
-  if(page?.homePage?.seo?.image) {
-    metadata.openGraph = {
-      images: {
-        url: urlFor(page.homePage.seo.image).url(),
-        width: 800,
-        height: 600,
-      }
-    };
-  }
+
+  metadata.openGraph = {
+    images: {
+      url: page?.homePage?.seo?.image
+        ? urlFor(page.homePage.seo.image).width(1200).height(630).url()
+        : `/api/og?id=${page?.homePage?._id}`,
+      width: 800,
+      height: 600,
+    },
+  };
+
 
   if(page?.homePage?.seo?.noIndex) {
     metadata.robots = "noindex"
