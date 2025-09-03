@@ -99,6 +99,13 @@ export type Page = {
     _type: "image";
   };
   seo?: Seo;
+  social?: Social;
+};
+
+export type Social = {
+  _type: "social";
+  linkedIn?: string;
+  x?: string;
 };
 
 export type Seo = {
@@ -279,6 +286,127 @@ export type Venue = {
   country?: string;
 };
 
+export type SanityAssistInstructionTask = {
+  _type: "sanity.assist.instructionTask";
+  path?: string;
+  instructionKey?: string;
+  started?: string;
+  updated?: string;
+  info?: string;
+};
+
+export type SanityAssistTaskStatus = {
+  _type: "sanity.assist.task.status";
+  tasks?: Array<{
+    _key: string;
+  } & SanityAssistInstructionTask>;
+};
+
+export type SanityAssistSchemaTypeAnnotations = {
+  _type: "sanity.assist.schemaType.annotations";
+  title?: string;
+  fields?: Array<{
+    _key: string;
+  } & SanityAssistSchemaTypeField>;
+};
+
+export type SanityAssistOutputType = {
+  _type: "sanity.assist.output.type";
+  type?: string;
+};
+
+export type SanityAssistOutputField = {
+  _type: "sanity.assist.output.field";
+  path?: string;
+};
+
+export type SanityAssistInstructionContext = {
+  _type: "sanity.assist.instruction.context";
+  reference?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "assist.instruction.context";
+  };
+};
+
+export type AssistInstructionContext = {
+  _id: string;
+  _type: "assist.instruction.context";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  context?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type SanityAssistInstructionUserInput = {
+  _type: "sanity.assist.instruction.userInput";
+  message?: string;
+  description?: string;
+};
+
+export type SanityAssistInstructionPrompt = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  } | {
+    _key: string;
+  } & SanityAssistInstructionFieldRef | {
+    _key: string;
+  } & SanityAssistInstructionContext | {
+    _key: string;
+  } & SanityAssistInstructionUserInput>;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: null;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
+export type SanityAssistInstructionFieldRef = {
+  _type: "sanity.assist.instruction.fieldRef";
+  path?: string;
+};
+
+export type SanityAssistInstruction = {
+  _type: "sanity.assist.instruction";
+  prompt?: SanityAssistInstructionPrompt;
+  icon?: string;
+  title?: string;
+  userId?: string;
+  createdById?: string;
+  output?: Array<{
+    _key: string;
+  } & SanityAssistOutputField | {
+    _key: string;
+  } & SanityAssistOutputType>;
+};
+
+export type SanityAssistSchemaTypeField = {
+  _type: "sanity.assist.schemaType.field";
+  path?: string;
+  instructions?: Array<{
+    _key: string;
+  } & SanityAssistInstruction>;
+};
+
 export type MediaTag = {
   _id: string;
   _type: "media.tag";
@@ -406,7 +534,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Redirect | Features | SiteSettings | Page | Seo | PageBuilder | Hero | Feedback | Event | Artist | Venue | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Redirect | Features | SiteSettings | Page | Social | Seo | PageBuilder | Hero | Feedback | Event | Artist | Venue | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../web/src/app/events/[slug]/page.tsx
 // Variable: EVENT_QUERY
@@ -708,6 +836,7 @@ export type HOME_PAGE_QUERYResult = {
         _type: "image";
       };
       seo?: Seo;
+      social?: Social;
       description: string | "";
       image: {
         asset?: {
@@ -723,6 +852,7 @@ export type HOME_PAGE_QUERYResult = {
       } | null;
       noIndex: boolean | null;
     };
+    social?: Social;
   } | null;
 } | null;
 // Variable: REDIRECTS_QUERY
@@ -732,6 +862,32 @@ export type REDIRECTS_QUERYResult = Array<{
   source: string | null;
   destination: string | null;
   permanent: boolean | null;
+}>;
+// Variable: OG_IMAGE_QUERY
+// Query: *[_id == $id][0]{    title,    "description":seo.description,    "image": mainImage.asset->{      url,      "metadata": {        palette      }    }  }
+export type OG_IMAGE_QUERYResult = {
+  title: null;
+  description: null;
+  image: null;
+} | {
+  title: string | null;
+  description: null;
+  image: null;
+} | {
+  title: string | null;
+  description: string | null;
+  image: {
+    url: string | null;
+    metadata: {
+      palette: null;
+    };
+  } | null;
+} | null;
+// Variable: SITEMAP_QUERY
+// Query: *[_type == "page" && defined(slug.current)] {    "href": select(      _type == "page" => "/" + slug.current,      slug.current    ),    _updatedAt  }
+export type SITEMAP_QUERYResult = Array<{
+  href: string | null;
+  _updatedAt: string;
 }>;
 
 // Query TypeMap
@@ -743,5 +899,7 @@ declare module "@sanity/client" {
     "*[_type == \"page\" && slug.current == $slug][0] {\n  _id,\n  title,\n  slug,\n  content\n}": PAGE_QUERYResult;
     "*[_id == \"siteSettings\"][0]{\n  homePage->{\n    ...,\n    \"seo\": {\n      ...,\n      \"title\": coalesce(seo.title, title, \"\"),\n      \"description\": coalesce(seo.description, \"\"),\n      \"image\": seo.image,\n      \"noIndex\": seo.noIndex\n    },\n    content[]{\n      ...,\n      _key,\n      _type,\n      _type == \"reference\" => {\n        \"resolved\": @-> {...}\n        },\n      }\n  }\n}": HOME_PAGE_QUERYResult;
     "*[_type == \"redirect\" && isEnabled == true] {\n    _id,\n    source,\n    destination,\n    permanent,\n  }": REDIRECTS_QUERYResult;
+    "\n  *[_id == $id][0]{\n    title,\n    \"description\":seo.description,\n    \"image\": mainImage.asset->{\n      url,\n      \"metadata\": {\n        palette\n      }\n    }\n  }\n": OG_IMAGE_QUERYResult;
+    "\n  *[_type == \"page\" && defined(slug.current)] {\n    \"href\": select(\n      _type == \"page\" => \"/\" + slug.current,\n      slug.current\n    ),\n    _updatedAt\n  }\n": SITEMAP_QUERYResult;
   }
 }
